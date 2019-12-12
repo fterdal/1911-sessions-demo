@@ -1,20 +1,17 @@
 const express = require("express")
-const session = require("express-session")
+const morgan = require("morgan")
 
 const app = express()
-
-app.use(
-  session({
-    secret: "usd7fgsdftsyudf",
-    resave: false,
-    saveUninitialized: true
-  })
-)
+app.use(morgan("dev"))
 
 app.get("/", (req, res, next) => {
-  if (!req.session.counter) req.session.counter = 1
-  else req.session.counter++
-  res.send(`Hello There, your session is ${JSON.stringify(req.session.counter)}`)
+  res.send(`
+    <img src="/cookiemonster.jpeg">
+  `)
+})
+
+app.get("/cookiemonster.jpeg", (req, res) => {
+  res.sendFile(__dirname + "/cookiemonster.jpeg")
 })
 
 const PORT = 4321
